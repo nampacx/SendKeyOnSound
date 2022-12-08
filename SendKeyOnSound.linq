@@ -7,7 +7,7 @@
 </Query>
 
 const int VIRTUALKEY = 0x74; //F5
-const string processName = "WoW";
+const string processName = "";
 Random rnd = new Random();
 
 async Task Main()
@@ -16,13 +16,12 @@ async Task Main()
 	using (var enumerator = new MMDeviceEnumerator())
 	using (var meter = AudioMeterInformation.FromDevice(enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Console)))
 	{
-		Click();
 		while (true)
 		{
 			await Task.Delay(500);
 			Util.ClearResults();
 			var p = (meter.PeakValue * 1000).Dump();
-			if (p > 20)
+			if (p > 40)
 			{
 				c = 0;
 				true.Dump();
