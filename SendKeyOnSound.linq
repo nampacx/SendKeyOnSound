@@ -8,33 +8,35 @@
 
 const int VIRTUALKEY = 0x74; //F5
 const string processName = "";
+int treashold = 40;
 Random rnd = new Random();
+int timer = 500;
+int maxRounds = 22;
 
 async Task Main()
 {
 	var c = 0;
+	Click();
 	using (var enumerator = new MMDeviceEnumerator())
 	using (var meter = AudioMeterInformation.FromDevice(enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Console)))
 	{
 		while (true)
 		{
-			await Task.Delay(500);
+			await Task.Delay(timer);
 			Util.ClearResults();
 			var p = (meter.PeakValue * 1000).Dump();
-			if (p > 40)
+			if (p > treashold)
 			{
 				c = 0;
 				true.Dump();
-				await Task.Delay(rnd.Next(10)*200);
-				Click();
-				await Task.Delay(rnd.Next(5)*2000);
 				Click();
 				await Task.Delay(2000);
+				Click();
 			}
 			else
 			{
 				c++;
-				if(c >= 50){
+				if(c >= maxRounds*1000/timer){
 					Click();
 					c = 0;
 				}
